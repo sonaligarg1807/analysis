@@ -114,6 +114,6 @@ class COMEvolution:
         ani = animation.FuncAnimation(fig, update, frames=range(len(self.com_x)), interval=50, blit=True)
 
         if self.save_path:
-            ani.save(self.save_path, writer="ffmpeg", fps=20)
+            ani.save(self.save_path, writer="ffmpeg", fps=20) # use extension as .mp4 if writter = "ffmpeg" and .gif if writer = "pillow"
 
         plt.show()

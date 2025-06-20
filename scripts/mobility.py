@@ -62,7 +62,7 @@ class Mobility:
         plt.plot(t_range, msd_range, 'o', label='Data Points')
         plt.plot(t_range, slope * t_range + intercept, '-', label='Fitted Line', color='black')
         plt.xlabel("Time (fs)", fontdict={'fontname': 'Comic Sans MS'}, fontsize=15)
-        plt.ylabel("MSD (amu^2)", fontdict={'fontname': 'Comic Sans MS'}, fontsize=15)
+        plt.ylabel("MSD $\mathregular{(amu^2)}$", fontdict={'fontname': 'Comic Sans MS'}, fontsize=15)
 
         if save_filename:
             plt.savefig(save_filename, bbox_inches='tight', dpi=300)
