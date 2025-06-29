@@ -13,8 +13,8 @@ class PlotOccupation:
         Plots the averaged occupation over time for selected sites.
         """
         plt.figure(figsize=(8, 8))
-        plt.xticks(fontsize=14)
-        plt.yticks(fontsize=14)
+        plt.xticks(fontsize=18)
+        plt.yticks(fontsize=18)
 
         try:
             data = np.loadtxt(file_path)
@@ -39,10 +39,10 @@ class PlotOccupation:
             print(f"An error occurred while processing {file_path}: {e}")
             return
 
-        plt.xlabel('Time (fs)', fontsize=14, fontweight='bold')
-        plt.ylabel('Occupation', fontsize=14, fontweight='bold')
+        plt.xlabel('Time (fs)', fontsize=18, fontweight='bold')
+        plt.ylabel('Occupation', fontsize=18, fontweight='bold')
         plt.title('Occupation vs. Time')
-        plt.legend(fontsize=10, frameon=False)
+        plt.legend(fontsize=12, frameon=False)
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.tight_layout()
         plt.show()
