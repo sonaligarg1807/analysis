@@ -91,20 +91,20 @@ class COMEvolution:
         x, y = self.qm_com_positions[:, 0], self.qm_com_positions[:, 1]
         fig, ax = plt.subplots(figsize=(8, 8))
         ax.scatter(x, y, c=self.qm_color, marker='o', s=30, label="QM sites")
-        ax.tick_params(axis='both', which='major', labelsize=14)
+        ax.tick_params(axis='both', which='major', labelsize=18)
 
         gb_indices = [self.qm_resids.index(resid) for resid in self.annotate_resids if resid in self.qm_resids]
         for idx in gb_indices:
             ax.annotate(self.annotate_label, (x[idx], y[idx]), textcoords="offset points",
-                        xytext=(5, 5), ha='center', fontsize=10, color=self.charge_color, fontweight='bold')
+                        xytext=(5, 5), ha='center', fontsize=14, color=self.charge_color, fontweight='bold')
 
         charge_marker, = ax.plot([], [], 'x', color=self.charge_color, markersize=8, label='Charge')
         charge_path, = ax.plot([], [], '--', color=self.charge_color, alpha=0.7)
 
-        ax.set_xlabel("X (nm)", fontsize=14, fontweight='bold')
-        ax.set_ylabel("Y (nm)", fontsize=14, fontweight='bold')
+        ax.set_xlabel("X (nm)", fontsize=18, fontweight='bold')
+        ax.set_ylabel("Y (nm)", fontsize=18, fontweight='bold')
         ax.set_title(self.title)
-        ax.legend(fontsize=10, frameon=False)
+        ax.legend(fontsize=14, frameon=False)
 
         def update(frame):
             charge_marker.set_data([self.com_x[frame]], [self.com_y[frame]])
