@@ -97,3 +97,5 @@ class COMDistanceCalculator:
         print(f"COM Molecule 1: {com1}")
         print(f"COM Molecule 2: {com2}")
         print(f"Distance between COMs: {dist_nm:.3f} nm | {dist_angstrom:.3f} Å")
+        
+        return dist_nm
