@@ -5,10 +5,10 @@ from typing import List, Tuple, Dict, Union, Optional
 class COMDistanceCalculator:
     """
     Compute:
-      • COM→COM distance between two molecules
-      • Plane–plane distance using centroids of two planes (3 atoms each)
-      • Atom–atom distance by 1-based global indices
-      • COM→COM by explicit atom index ranges
+    • COM→COM distance between two molecules
+    • Plane–plane distance using centroids of two planes (3 atoms each)
+    • Atom–atom distance by 1-based global indices
+    • COM→COM by explicit atom index ranges
 
     Modes:
     • mode='gro' : positions read in nm; molecules selected by resid (int)
