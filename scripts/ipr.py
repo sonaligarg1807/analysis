@@ -11,33 +11,39 @@ class IPR:
         self.ipr_values = self.data[:, 1]
 
     def averaged_ipr(self, output_filename=None, legend_name=None, time_range=None, plot_color='blue', title='Time vs. IPR', 
-                    xlabel='Time (fs)', ylabel='IPR', font='Comic Sans MS', fontsize=15):
+                xlabel='Time (fs)', ylabel='IPR', font='Comic Sans MS', fontsize=15):
         """
         Plot IPR vs. time and calculate average IPR.
         Allows time_range filtering and custom styling.
         """
-        plt.figure(figsize=(5, 3))
-        plt.plot(self.time, self.ipr_values, color=plot_color, linestyle='-', label=legend_name or "IPR")
-        plt.title(title, fontdict={'fontname': font}, fontsize=fontsize)
-        plt.xlabel(xlabel, fontdict={'fontname': font}, fontsize=fontsize)
-        plt.ylabel(ylabel, fontdict={'fontname': font}, fontsize=fontsize)
-        plt.grid(True)
-        plt.legend(fontsize=fontsize-5, frameon=False)
-
-        if output_filename:
-            plt.savefig(output_filename, bbox_inches='tight', dpi=300)
-        plt.show()
-
+        # Calculate average IPR first
         if time_range:
             start_time, end_time = time_range
             indices = np.where((self.time >= start_time) & (self.time <= end_time))
             ipr_range = self.ipr_values[indices]
             average_ipr = np.mean(ipr_range)
-            print(f"Average IPR in range {start_time}-{end_time} fs: {average_ipr:.4f}")
         else:
             average_ipr = np.mean(self.ipr_values)
+        
+        plt.figure(figsize=(5, 3))
+        # Add average to legend
+        label = f"{legend_name or 'IPR'} (Avg: {average_ipr:.4f})"
+        plt.plot(self.time, self.ipr_values, color=plot_color, linestyle='-', label=label)
+        plt.title(title, fontdict={'fontname': font}, fontsize=fontsize)
+        plt.xlabel(xlabel, fontdict={'fontname': font}, fontsize=fontsize)
+        plt.ylabel(ylabel, fontdict={'fontname': font}, fontsize=fontsize)
+        plt.grid(True)
+        plt.legend(fontsize=fontsize-5, frameon=False)
+    
+        if output_filename:
+            plt.savefig(output_filename, bbox_inches='tight', dpi=300)
+        plt.show()
+    
+        if time_range:
+            print(f"Average IPR in range {start_time}-{end_time} fs: {average_ipr:.4f}")
+        else:
             print(f"Average IPR (entire range): {average_ipr:.4f}")
-
+    
         return average_ipr
 
     def animation_ipr(self, output_filename, fps=None, step_fs=None, plot_color='blue', title='Time vs. Charge Delocalisation', xlabel='Time (fs)', 
