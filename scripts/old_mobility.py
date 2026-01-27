@@ -23,7 +23,7 @@ class Mobility:
         plt.figure(figsize=(10, 8))
         for fname, label, color, n in zip(fnames, labels, colors, ns):
             t, msd_x, msd_y, msd_z = np.loadtxt(fname, usecols=(0, 7, 8, 9), unpack=True)
-            msd = (msd_x + msd_y + msd_z)
+            msd = np.sqrt(msd_x**2 + msd_y**2 + msd_z**2)
             mask = (t >= start_t) & (t <= end_t)
             t_range, msd_range = t[mask], msd[mask]
 
@@ -50,7 +50,7 @@ class Mobility:
 
     def plot_single_file_msd(self, fname, start_t, end_t, n, save_filename=None):
         t, msd_x, msd_y, msd_z = np.loadtxt(fname, usecols=(0, 7, 8, 9), unpack=True)
-        msd = (msd_x + msd_y + msd_z)
+        msd = np.sqrt(msd_x**2 + msd_y**2 + msd_z**2)
         mask = (t >= start_t) & (t <= end_t)
         t_range, msd_range = t[mask], msd[mask]
 
