@@ -68,6 +68,75 @@ class IPR:
 
         return average_ipr
 
+    def averaged_ipr_std(
+        self,
+        output_filename=None,
+        legend_name=None,
+        time_range=None,
+        plot_color='blue',
+        title='Time vs. IPR',
+        xlabel='Time (fs)',
+        ylabel='IPR',
+        font='DejaVu Sans',
+        fontsize=15
+    ):
+        """
+        STATIC plot only:
+        - Plots IPR vs time (optionally restricted to time_range)
+        - Computes mean and standard deviation
+        - Displays mean ± std in legend
+        - Prints mean and std
+        """
+
+        # --- Select data ---
+        if time_range is not None:
+            start_time, end_time = time_range
+            mask = (self.time >= start_time) & (self.time <= end_time)
+            time_plot = self.time[mask]
+            ipr_plot = self.ipr_values[mask]
+
+            if time_plot.size == 0:
+                raise ValueError(
+                    f"No data points found in time_range={time_range}. "
+                    f"Available time range: {self.time.min()} to {self.time.max()} fs"
+                )
+        else:
+            time_plot = self.time
+            ipr_plot = self.ipr_values
+
+        mean_ipr = float(np.mean(ipr_plot))
+        std_ipr = float(np.std(ipr_plot, ddof=1)) if ipr_plot.size > 1 else 0.0
+
+        # --- Plot ---
+        plt.figure(figsize=(5, 3))
+        label = f"{legend_name or 'IPR'} (Avg: {mean_ipr:.4f} ± {std_ipr:.4f})"
+        plt.plot(time_plot, ipr_plot, color=plot_color, linestyle='-', label=label)
+
+        plt.title(title, fontdict={'fontname': font}, fontsize=fontsize)
+        plt.xlabel(xlabel, fontdict={'fontname': font}, fontsize=fontsize)
+        plt.ylabel(ylabel, fontdict={'fontname': font}, fontsize=fontsize)
+        plt.grid(True)
+        plt.legend(fontsize=fontsize - 5, frameon=False)
+
+        if output_filename:
+            plt.savefig(output_filename, bbox_inches='tight', dpi=300)
+        plt.show()
+
+        # --- Print summary ---
+        if time_range is not None:
+            print(
+                f"IPR in range {start_time}-{end_time} fs: "
+                f"mean = {mean_ipr:.4f}, std = {std_ipr:.4f}"
+            )
+        else:
+            print(
+                f"IPR (entire range): "
+                f"mean = {mean_ipr:.4f}, std = {std_ipr:.4f}"
+            )
+
+        return mean_ipr, std_ipr
+
+
     def animation_ipr(
         self,
         output_filename,
